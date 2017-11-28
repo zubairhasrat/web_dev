@@ -10,7 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+/* to show all list */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/','PageController@index');
+
+/* add new task */
+ Route::resource('/tasks','TaskController');
+/* delete an existing tasks */
