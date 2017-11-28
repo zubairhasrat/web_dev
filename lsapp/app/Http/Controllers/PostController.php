@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\post;
+use App\Http\Requests\PostRequest;
 use DB;
 class PostController extends Controller
 {
@@ -29,7 +30,7 @@ class PostController extends Controller
         //$posts= Post::all();
         //return Post::where('title','post two');
         //$posts=DB::select('select * from posts');
-        $posts= Post::orderBy('created_at','desc')->paginate(10);
+        $posts= Post::orderBy('created_at','desc')->paginate(1);
         //$posts= Post::orderBy('title','desc')->take(1)->get();
         return view('posts.index')->with('posts',$posts);
     }
@@ -51,13 +52,9 @@ class PostController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostRequest $request)
     {
-        $this->validate($request,[
-            'title'=>'required',
-            'body'=>'required',
-            'cover_image' => 'image|nullable|max:1999'
-        ]);
+        $this->validate($request->all());
         //handle file upload
         if($request->hasFile('cover_image')){
             //get filename with extension
@@ -109,7 +106,7 @@ class PostController extends Controller
         
         if(auth()->user()->id !== $post->user_id){
 
-            return redirect('/posts')->with('error','Unothorized page');
+            return redirect('/posts')->with('error','Unauthorized page');
         }
         
         return view('posts.edit')->with('post',$post);
@@ -122,13 +119,10 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(PostRequest $request, $id)
     {
         
-        $this->validate($request,[
-            'title'=>'required',
-            'body'=>'required'
-        ]);
+        $this->validate($request->all());
 
         if($request->hasFile('cover_image')){
             //get filename with extension

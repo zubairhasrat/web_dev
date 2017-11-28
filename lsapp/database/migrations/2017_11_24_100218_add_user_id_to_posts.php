@@ -14,7 +14,9 @@ class AddUserIdToPosts extends Migration
     public function up()
     {
         schema::table('posts',function($table){
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
+
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 
@@ -26,7 +28,7 @@ class AddUserIdToPosts extends Migration
     public function down()
     {
         schema::table('posts',function($table){
-            $table->dropColumn('user_id');
+            $table->dropForeign('user_id');
         });
     }
 }

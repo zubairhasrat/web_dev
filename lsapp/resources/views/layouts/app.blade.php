@@ -12,6 +12,11 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <style>
+        .navbar{
+            border-radius: 0;
+        }
+    </style>
 </head>
 <body>
     <div id="app">

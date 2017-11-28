@@ -16,7 +16,31 @@ window.Vue = require('vue');
  */
 
 Vue.component('example-component', require('./components/ExampleComponent.vue'));
-
+Vue.component('chat-message', require('./components/chat-message.vue'));
+Vue.component('chat-log', require('./components/ChatLog.vue'));
+Vue.component('chat-composer', require('./components/ChatComposer.vue'));
 const app = new Vue({
     el: '#app'
+    ,
+    data(){
+        return{
+        messages:[
+            {
+                message:'hello by auther 1',
+                auther:'auther 1'
+            },
+             {
+                message:'hello by auther 2',
+                auther:'auther 2'
+            }
+        ]
+    }
+    }
+    ,
+    methods:{
+        addMessage(){
+            //alert('message added');
+            this.messages.push(message);
+        }
+    }
 });
