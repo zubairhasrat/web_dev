@@ -62,7 +62,7 @@
 		      </div>
 		      <div class="modal-body">
 
-		      		<form data-toggle="validator" action="addItem" method="POST">
+		      		<form data-toggle="validator">
 						<input name="_token" type="hidden" value="{{ csrf_token() }}" />
 
 		      			<div class="form-group">
@@ -76,7 +76,7 @@
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn crud-submit btn-success">Submit</button>
+							<button  class="btn crud-submit btn-success">Submit</button>
 						</div>	
 		      		</form>
 		      </div>
@@ -95,7 +95,7 @@
 		      </div>
 		      <div class="modal-body">
 
-		      		<form data-toggle="validator" action="" method="PUT">
+		      		<form data-toggle="validator">
 		      			<div class="form-group">
 							<label class="control-label" for="title">Title:</label>
 							<input type="text" name="title" class="form-control" data-error="Please enter title." required />
@@ -107,7 +107,7 @@
 							<div class="help-block with-errors"></div>
 						</div>
 						<div class="form-group">
-							<button type="submit" class="btn btn-success crud-submit-edit">Submit</button>
+							<button  class="btn btn-success crud-submit-edit">Submit</button>
 						</div>
 		      		</form>
 

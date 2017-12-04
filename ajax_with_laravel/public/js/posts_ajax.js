@@ -75,8 +75,7 @@ $(function(){
             $.ajax({
                 type: 'post',
                 url: 'addItem',
-                data: {
-                    // '_token': $('input[name=_token]').val(),
+                data: {      
                      'title': $('input[name=title]').val(),
                      'body': $('input[name=body]').val(),
                      '_token': $('input[name=_token]').val(),
@@ -87,7 +86,7 @@ $(function(){
                         $('.error').removeClass('hidden');
                         $('.error').text(data.errors.name);
                     } else {
-                        getPageData();
+                         getPageData();
                          $('.error').remove();
                          toastr.success('Item Created Successfully.', 'Success Alert', {timeOut: 5000});
                     }
