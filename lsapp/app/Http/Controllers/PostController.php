@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\post;
+use App\User;
 use App\Http\Requests\PostRequest;
 use DB;
 class PostController extends Controller
@@ -16,9 +17,13 @@ class PostController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',['except'=>['index','show']]);
+        $this->middleware('auth',['except'=>['index','show','ajax']]);
     }
 
+    public function manageItemAjax()
+    {
+        return view('posts.index');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,9 +35,13 @@ class PostController extends Controller
         //$posts= Post::all();
         //return Post::where('title','post two');
         //$posts=DB::select('select * from posts');
-        $posts= Post::orderBy('created_at','desc')->paginate(1);
+       // $posts= Post::orderBy('created_at','desc')->paginate(1);
         //$posts= Post::orderBy('title','desc')->take(1)->get();
-        return view('posts.index')->with('posts',$posts);
+       // 
+        $posts = Post::latest()->paginate(5);
+       // 
+        //return view('posts.index')->with('posts',$posts)->render();;
+        return response()->json($posts);
     }
 
     /**
@@ -45,16 +54,20 @@ class PostController extends Controller
         //
         return view('posts.create');
     }
-
+     
+    public function testajax(){
+        $msg = "This is a simple message.";
+        return response()->json(array('msg'=> $msg), 200);
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(PostRequest $request)
+    public function store(Request $request )
     {
-        $this->validate($request->all());
+        //$this->validate($request->all());
         //handle file upload
         if($request->hasFile('cover_image')){
             //get filename with extension
@@ -71,14 +84,26 @@ class PostController extends Controller
         }else{
             $fileNameToStore = 'noImage.jpg';
         }
-            $post = new Post;
-            $post->title = $request->input('title');
-            $post->body = $request->input('body');
-            $post->user_id=auth()->user()->id;
-            $post->cover_image=$fileNameToStore;
-            $post->save();
-            return redirect('/posts')->with('success','post created');
 
+       
+            // $post = new Post;
+            // $post->title = $request->input('title');
+            // $post->body = $request->input('body');
+            // $post->user_id=auth()->user()->id;
+            // $post->cover_image=$fileNameToStore;
+            
+            $create=  Post::create([
+                'user_id' => auth()->user()->id,
+                'title' => $request->input('title'),
+                'body' =>  $request->input('body'),
+                'cover_image' =>$fileNameToStore
+            ]);
+            return response()->json($create);
+           
+            
+            //return redirect('/posts')->with('success','post created');
+            
+          
             
     }
 
@@ -122,7 +147,7 @@ class PostController extends Controller
     public function update(PostRequest $request, $id)
     {
         
-        $this->validate($request->all());
+       // $this->validate($request->all());
 
         if($request->hasFile('cover_image')){
             //get filename with extension
@@ -165,7 +190,8 @@ class PostController extends Controller
             //delete image
             Storage::delete('public/cover_images/'.$post->cover_image);
         }
+        
         $post->delete();
-        return redirect('/posts')->with('success','post removed');
+      // return redirect('/posts')->with('success','post removed');
     }
 }

@@ -12,10 +12,9 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    
     <style>
-        .navbar{
-            border-radius: 0;
-        }
+       
     </style>
 </head>
 <body>
@@ -29,7 +28,9 @@
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
+    {{--  <script src="{{ asset('js/app.js') }}"></script>  --}}
+    <script src="js/custom.js"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
     <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
     <script>
         CKEDITOR.replace( 'article-ckeditor' );

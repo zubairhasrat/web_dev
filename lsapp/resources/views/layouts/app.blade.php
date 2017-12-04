@@ -17,21 +17,33 @@
             border-radius: 0;
         }
     </style>
+  
 </head>
 <body>
     <div id="app">
     
         @include('inc.navbar')
-        <div class='container'>
-        @include('inc.message')
-        @yield('content')
-        </div>
+            <div class='container'>
+                @include('inc.message')
+                @yield('content')
+            </div>
     </div>
 
     <!-- Scripts -->
-    <script src="{{ asset('js/app.js') }}"></script>
-    <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js"></script>
+    
+    
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.0/jquery.js"></script>
+
+    <script src="{{ asset('/js/app.js') }}"></script>
+    {{--  <script src="{{asset('js/jquery.min.js')}}"></script>  --}}
+    <script src="{{ '/js/ajaxtest.js' }}"></script>
+    
+     <script type="text/javascript">
+    	   var url = "<?php echo route('posts.index')?>";
+        </script>
     <script>
+   <script src="/vendor/unisharp/laravel-ckeditor/ckeditor.js">
+   
         CKEDITOR.replace( 'article-ckeditor' );
     </script>
 </body>

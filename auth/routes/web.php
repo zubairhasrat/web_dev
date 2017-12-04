@@ -11,21 +11,11 @@
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-});
+Route::get('/','Custom_Login@index');
+Route::get('/login','Custom_Login@login');
+Route::get('/register','Custom_Login@register');
 
-Route::get('/login',function(){
-    return view('login');
-});
-
-Route::get('/register',function(){
-    return view('register');
-});
-Route::get('/logedin',function(){
-    return view('logedin');
-});
-
+Route::get('/home', 'HomeController@index');
 Route::post('/login','Custom_Login@authenticateUser');
 Route::post('/register','Custom_Login@register_user');
-Route::post('/logout','Custom_Login@logout_user');
+Route::get('/logout','Custom_Login@logout_user');

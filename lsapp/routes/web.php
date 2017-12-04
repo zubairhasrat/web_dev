@@ -11,11 +11,28 @@
 |
 */
 
+
 Route::get('/','PagesController@index');
 Route::get('/about','PagesController@about');
 Route::get('/services','PagesController@services');
-Route::resource('/posts','PostController');
+
+Route::get('/posts/create', 'PostController@manageItemAjax');
+Route::resource('posts','PostController');
+
+Route::post('/getmsg','PostController@testajax');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('ajax',function(){
+    return view('testajax');
+ });
+
+ Route::get('/manage-item-ajax', 'ItemAjaxController@manageItemAjax');
+ Route::resource('/item-ajax', 'ItemAjaxController');
+
+ Route::get('/test','AjaxtestController@show_view');
+
+ Route::get('ajaxtest','AjaxtestController@store');
+ Route::post('ajaxtest','AjaxtestController@show');

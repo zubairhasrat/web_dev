@@ -1,6 +1,17 @@
 @extends('layouts.app')
 @section('content')
     <h1>Posts</h1>
+   
+<table id="my-containing-data">
+    <tr>
+        <th>Id</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Gender</th>
+        <th>Created At</th>
+    </tr>
+</table>
+		{{--  /<ul id="pagination" class="pagination-sm"></ul>  --}}
     @if(count($posts)>0)
        
         @foreach($posts as $post)
@@ -14,7 +25,6 @@
                     <small>written on {{$post->created_at}} by {{$post->user->name}}</small>
                 </div>
             </div>
-           
          </div>
         @endforeach
      {{$posts->links()}}

@@ -11,23 +11,32 @@ use App\User;
 use App\Http\Requests\UserRequest;
 class Custom_Login extends Controller
 {
-    protected $redirectTo = '/';
+        //protected $redirectTo = '/';
+
         public function __construct()
         {
-           // $this->middleware('guest')->except('logout');
-          // authenticateUser();
-          
+           //$this->middleware('auth'); 
+        }
+        public function index(){
+            return view('index');
+        }
+        public function login(){
+            return view('/login');
+        }
+        public function register(){
+            return view('/register');
         }
         public function authenticateUser(){
 
             $email = Input::get('email');
             $password = Input::get('password');
             
-            
+            if(!Auth::check()){
                 if (Auth::attempt(['email' => $email, 'password' => $password])) {
                     // Authentication passed...
-                  return redirect('/logedin');
+                  return redirect('/home');
                 }
+            }
                 return redirect()->back()->withInput();
 
         }
@@ -48,12 +57,10 @@ class Custom_Login extends Controller
         $user->email = $email;
         $user->password = Hash::make($password);
         $user->save();
-
+        return redirect('/login');
     }
     public function logout_user(Request $request){
         Auth::logout();
-        $request->session()->flush();
-        $request->session()->regenerate();
         return redirect('/login');
     }
 }
